@@ -15,7 +15,7 @@ use Apitte\OpenApi\ISchemaBuilder;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Info(title="Swagger UI OpenAPI for nette-default-restapi", version="BETA")
+ * @OA\Info(title="Swagger UI OpenAPI", version="1.0")
  */
 final class OpenApiController implements IController
 {
