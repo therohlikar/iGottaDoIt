@@ -1,0 +1,36 @@
+parameters:
+    doctrine:
+        host: mysqldb
+        user: my_user
+        password: my_password
+        dbname: my_database
+
+includes:
+    - doctrine.neon
+
+application:
+	errorPresenter:
+		4xx: Error:Error4xx
+		5xx: Error:Error5xx
+	mapping: App\UI\*\**Presenter
+
+di:
+	export:
+		parameters: no
+		tags: no
+
+extensions:
+	api: Apitte\Core\DI\ApiExtension
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	
+api:
+	debug: %debugMode%
+	catchException: true
+	plugins:
+		Apitte\OpenApi\DI\OpenApiPlugin:
+
+console:
+	name: NETTE RESTAPI DEFAULT PROJECT
+	version: '1.0'
+	catchExceptions: true 
+	autoExit: true

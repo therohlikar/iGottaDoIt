@@ -1,0 +1,9 @@
+services:
+	- App\Controller\User\UserController
+
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Factory
+			- *Facade
