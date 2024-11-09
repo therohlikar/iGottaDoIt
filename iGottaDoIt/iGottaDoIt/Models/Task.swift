@@ -16,10 +16,13 @@ final class Task {
     
     var note: String
     
-    init(flag: Flag = Flag(0), timestamp: Date = Date.now, note: String = "") {
+    var done: Bool
+    
+    init(flag: Flag = Flag(0), timestamp: Date = Date.now, note: String = "", done: Bool = false) {
         self.flag = flag
         self.timestamp = timestamp
         self.note = note
+        self.done = done
     }
 }
 
