@@ -10,20 +10,14 @@ import SwiftData
 import SwiftUI
 
 
-final class Flag {
-    private var color: Color
-    private var priority: Int
+struct Flag:Codable {
+    var priority: Int
     
-    init(color: Color, priority: Int) {
-        self.color = color
+    init(_ priority: Int = 0) {
         self.priority = priority
     }
-    
-    public func getColor() -> Color {
-        return self.color
-    }
-    
-    public func getPriority() -> Int {
-        return self.priority
+
+    var description: String {
+        return "Flag(priority: \(priority))"
     }
 }

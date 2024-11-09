@@ -10,28 +10,16 @@ import SwiftData
 
 @Model
 final class Task {
-    private var flag: Flag
+    var flag: Flag
     
-    private var timestamp: Date
+    var timestamp: Date
     
-    private var note: String
+    var note: String
     
-    init(flag: Flag, timestamp: Date, note: String) {
+    init(flag: Flag = Flag(0), timestamp: Date = Date.now, note: String = "") {
         self.flag = flag
         self.timestamp = timestamp
         self.note = note
-    }
-    
-    public func getFlag() -> Flag {
-        self.flag
-    }
-    
-    public func getTimestamp() -> Date {
-        self.timestamp
-    }
-    
-    public func getNote() -> String {
-        self.note
     }
 }
 
