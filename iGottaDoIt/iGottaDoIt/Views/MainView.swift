@@ -16,13 +16,7 @@ struct MainView: View {
         NavigationSplitView {
             List {
                 ForEach(tasks) { task in
-                    NavigationLink {
-                        Text("Item at \(task.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                        
-                        Text("Task subject: \(task.note)")
-                        
-                        Text("Task flag: \(task.flag.description)")
-                    } label: {
+                    NavigationLink(destination: TaskDetailView(task: task)) {
                         Text(task.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
                     }
                 }
