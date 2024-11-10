@@ -10,14 +10,14 @@ import SwiftData
 import SwiftUI
 
 
-struct Flag:Codable {
-    var priority: Int
+struct Flag {
+    var priority: FlagPriority
     
-    init(_ priority: Int = 0) {
+    init(_ priority: FlagPriority = FlagPriority.low) {
         self.priority = priority
     }
 
     var description: String {
-        return "Flag(priority: \(priority))"
+        return "Flag(priority: \(priority.description))"
     }
 }

@@ -18,7 +18,7 @@ final class Task {
     
     var done: Bool
     
-    init(flag: Flag = Flag(0), timestamp: Date = Date.now, note: String = "", done: Bool = false) {
+    init(flag: Flag = Flag(), timestamp: Date = Date.now, note: String = "", done: Bool = false) {
         self.flag = flag
         self.timestamp = timestamp
         self.note = note
