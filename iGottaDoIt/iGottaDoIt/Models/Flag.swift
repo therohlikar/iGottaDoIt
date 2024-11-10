@@ -12,7 +12,7 @@ import SwiftUI
 struct Flag: Codable {
     var priority: FlagPriority
     
-    init(_ priority: FlagPriority = FlagPriority.low) {
+    init(_ priority: FlagPriority = FlagPriority.veryLow) {
         self.priority = priority
     }
 
@@ -23,4 +23,8 @@ struct Flag: Codable {
     var image: some View {
         return Image(systemName: "flag").foregroundStyle(self.priority.getPriorityInColor)
     }
+    
+    mutating func setHigherPriority() {
+            self.priority = self.priority.nextHigherPriority()
+        }
 }

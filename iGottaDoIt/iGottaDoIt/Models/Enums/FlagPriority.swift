@@ -33,7 +33,7 @@ enum FlagPriority: Int, Codable {
     var getPriorityInColor: Color{
         switch self{
         case .veryLow:
-            return .white
+            return .black
         case .low:
             return .yellow
         case .medium:
@@ -43,5 +43,9 @@ enum FlagPriority: Int, Codable {
         case .veryHigh:
             return .red
         }
+    }
+    
+    func nextHigherPriority() -> FlagPriority {
+        return FlagPriority(rawValue: self.rawValue + 1) ?? .veryHigh
     }
 }

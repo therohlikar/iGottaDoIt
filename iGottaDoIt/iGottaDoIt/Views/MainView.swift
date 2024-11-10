@@ -19,6 +19,9 @@ struct MainView: View {
                     NavigationLink(destination: TaskDetailView(task: task)) {
                         HStack{
                             task.flag.image
+                                .onTapGesture {
+                                    task.flag.setHigherPriority()
+                                }
                             
                             Text(task.title)
                         }
