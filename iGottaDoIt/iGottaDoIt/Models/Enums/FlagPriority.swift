@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum FlagPriority: Int {
+enum FlagPriority: Int, Codable {
     case veryLow = 1
     case low = 2
     case medium = 3

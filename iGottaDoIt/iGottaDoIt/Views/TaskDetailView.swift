@@ -17,6 +17,9 @@ struct TaskDetailView: View {
         Text("Task subject: \(task.note)")
         
         Text("Task flag: \(task.flag.description)")
+            .background{
+                task.flag.priority.getPriorityInColor
+            }
         
         Button(action: updateTime){
             Label("Update time", systemImage: "arrow.clockwise")

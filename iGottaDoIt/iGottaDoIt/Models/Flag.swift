@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import SwiftData
 import SwiftUI
 
 
-struct Flag {
+struct Flag: Codable {
     var priority: FlagPriority
     
     init(_ priority: FlagPriority = FlagPriority.low) {
