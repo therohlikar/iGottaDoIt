@@ -17,7 +17,12 @@ struct MainView: View {
             List {
                 ForEach(tasks) { task in
                     NavigationLink(destination: TaskDetailView(task: task)) {
-                        Text(task.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        HStack{
+                            task.flag.image
+                            
+                            Text(task.title)
+                        }
+                        
                     }
                 }
                 .onDelete(perform: deleteItems)

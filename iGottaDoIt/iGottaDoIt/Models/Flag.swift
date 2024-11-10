@@ -19,4 +19,8 @@ struct Flag: Codable {
     var description: String {
         return "Flag(priority: \(priority.description))"
     }
+    
+    var image: some View {
+        return Image(systemName: "flag").foregroundStyle(self.priority.getPriorityInColor)
+    }
 }
