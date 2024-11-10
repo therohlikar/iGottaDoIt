@@ -46,6 +46,12 @@ enum FlagPriority: Int, Codable {
     }
     
     func nextHigherPriority() -> FlagPriority {
-        return FlagPriority(rawValue: self.rawValue + 1) ?? .veryHigh
+        var temp = self
+        if temp == .veryHigh{
+            temp = .veryLow
+        }else {
+            temp = FlagPriority(rawValue: self.rawValue + 1) ?? .veryHigh
+        }
+        return temp
     }
 }

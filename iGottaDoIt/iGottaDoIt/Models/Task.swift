@@ -10,6 +10,12 @@ import SwiftData
 
 @Model
 final class Task {
+    // date of creation
+    // do it until
+    // notification
+    // daily routine (basically repeater)
+    // location
+    
     var id: UUID
     
     var flag: Flag
