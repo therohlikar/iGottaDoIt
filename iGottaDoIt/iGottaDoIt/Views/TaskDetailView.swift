@@ -17,6 +17,14 @@ struct TaskDetailView: View {
         Text("Task subject: \(task.note)")
         
         Text("Task flag: \(task.flag.description)")
+        
+        Button(action: updateTime){
+            Label("Update time", systemImage: "arrow.clockwise")
+        }
+    }
+    
+    private func updateTime(){
+        self.task.timestamp = .now
     }
 }
 
