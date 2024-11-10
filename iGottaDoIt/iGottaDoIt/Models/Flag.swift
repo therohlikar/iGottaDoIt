@@ -21,7 +21,14 @@ struct Flag: Codable {
     }
     
     var image: some View {
-        return Image(systemName: "flag").foregroundStyle(self.priority.getPriorityInColor)
+        return Image(systemName: "flag")
+            .foregroundStyle(.white)
+            .background{
+                RoundedRectangle(cornerRadius: 180)
+                    .fill(self.priority.getPriorityInColor)
+                    .frame(width: 30, height: 30)
+            }
+            .padding(1)
     }
     
     mutating func setHigherPriority() {
