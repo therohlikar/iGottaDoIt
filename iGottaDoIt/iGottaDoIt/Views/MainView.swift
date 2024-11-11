@@ -47,7 +47,7 @@ struct MainView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Task(flag: Flag(), timestamp: Date.now, note: "Do not use Grindr while having existential crisis")
+            let newItem = Task(flag: Flag(), until: Date.now, note: "Do not use Grindr while having existential crisis")
             modelContext.insert(newItem)
         }
     }

@@ -10,8 +10,6 @@ import SwiftData
 
 @Model
 final class Task {
-    // date of creation
-    // do it until
     // notification
     // daily routine (basically repeater)
     // location
@@ -20,16 +18,19 @@ final class Task {
     
     var flag: Flag
     
-    var timestamp: Date
+    var until: Date
+    
+    var created: Date
     
     var note: String
     
     var done: Bool
     
-    init(flag: Flag = Flag(), timestamp: Date = Date.now, note: String = "", done: Bool = false) {
+    init(flag: Flag = Flag(), until: Date = Date.now, note: String = "", done: Bool = false) {
         self.id = UUID()
+        self.created = Date.now
         self.flag = flag
-        self.timestamp = timestamp
+        self.until = until
         self.note = note
         self.done = done
     }
@@ -38,7 +39,7 @@ final class Task {
         var temp: String = ""
         let characterLimit: Int = 30
         if self.note.isEmpty {
-            temp = "To do task until \(self.timestamp)"
+            temp = "To do task until \(self.until)"
         }else{
             temp = self.note.count > characterLimit ? String(self.note.prefix(characterLimit)) + "..." : self.note
         }
