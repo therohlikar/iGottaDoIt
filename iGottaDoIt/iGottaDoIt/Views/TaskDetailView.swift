@@ -34,7 +34,7 @@ struct TaskDetailView: View {
                 .padding()
             
             if task.finishedDate != nil{
-                Text("Task has been done on \(task.finishedDate!, format: Date.FormatStyle(date: .complete, time: .shortened))")
+                Text("Task has been completed on \(task.finishedDate!, format: Date.FormatStyle(date: .complete, time: .shortened))")
                     .padding(.horizontal)
             }
             
@@ -45,7 +45,7 @@ struct TaskDetailView: View {
         
         VStack(alignment: .center){
             Button(action: finishTask){
-                Label(self.task.done ? "Task is done" : "Task is not done", systemImage: self.task.done ? "checkmark.circle.fill" : "circle")
+                Label("Task is \(self.task.doneLabel)", systemImage: self.task.done ? "checkmark.circle.fill" : "circle")
             }
             .padding()
         }

@@ -27,6 +27,10 @@ final class Task {
     
     var done: Bool
     
+    var doneLabel: String {
+        return done ? "completed" : "not completed"
+    }
+    
     var finishedDate: Date?
     
     init(flag: Flag = Flag(), until: Date = Date.now, note: String = "", done: Bool = false) {
