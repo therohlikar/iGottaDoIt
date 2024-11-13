@@ -8,22 +8,41 @@
 import SwiftUI
 import SwiftData
 
+enum Filters {
+    case notDone
+    case all
+}
+
 struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var tasks: [Task]
+    @State private var selectedFilter: Filters = .notDone
+    
+    var filteredTasks: [Task] {
+        var temp = tasks.filter { task in
+            switch selectedFilter {
+            case .all:
+                return true
+            case .notDone:
+                return !task.done
+            }
+        }
+        
+        temp.sort { !$0.done && $1.done }
+        
+        return temp
+    }
 
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(tasks) { task in
+                ForEach(filteredTasks) { task in
                     NavigationLink(destination: TaskDetailView(task: task)) {
                         HStack{
-                            task.flag.image
-                                .onTapGesture {
-                                    task.flag.setHigherPriority()
-                                }
+                            task.taskIcon
                             
                             Text(task.title)
+                                .font(.title3)
                         }
                         
                     }
@@ -31,17 +50,31 @@ struct MainView: View {
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Spacer()
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Text("+")
+                            .font(Font.system(size: .init(50)))
+                            .frame(width: 35, height: 35, alignment: .center)
+                            .padding(4)
+                    }
+                }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button(action: filterTasks) {
+                        Image(systemName: selectedFilter == .all ? "eye" : "eye.slash")
                     }
                 }
             }
         } detail: {
             Text("Select an item")
+        }
+    }
+    
+    private func filterTasks() {
+        if selectedFilter == .all {
+            selectedFilter = .notDone
+        }else {
+            selectedFilter = .all
         }
     }
 

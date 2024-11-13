@@ -29,10 +29,10 @@ struct Flag: Codable {
                     .fill(self.priority.getPriorityInColor)
                     .frame(width: 30, height: 30)
             }
-            .padding(.horizontal, 1)
+            .padding(.horizontal, 3)
     }
     
     mutating func setHigherPriority() {
-            self.priority = self.priority.nextHigherPriority()
-        }
+        self.priority = self.priority.nextHigherPriority()
+    }
 }

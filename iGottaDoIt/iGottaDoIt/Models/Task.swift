@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 @Model
 final class Task {
@@ -26,6 +27,8 @@ final class Task {
     
     var done: Bool
     
+    var finishedDate: Date?
+    
     init(flag: Flag = Flag(), until: Date = Date.now, note: String = "", done: Bool = false) {
         self.id = UUID()
         self.created = Date.now
@@ -44,6 +47,38 @@ final class Task {
             temp = self.note.count > characterLimit ? String(self.note.prefix(characterLimit)) + "..." : self.note
         }
         return temp
+    }
+    
+    func completeTask() {
+        self.done.toggle()
+        
+        self.finishedDate = (self.done ? Date.now : nil)
+    }
+    
+    var taskIcon: some View {
+        if !self.done {
+            return AnyView(
+                self.flag.image
+                    .onTapGesture {
+                        self.flag.setHigherPriority()
+                    }
+                    .padding(.trailing)
+            
+            )
+        }
+        
+        return AnyView(
+            Image(systemName: "checkmark.circle.fill")
+            .foregroundStyle(.white)
+            .padding(1)
+            .background{
+                RoundedRectangle(cornerRadius: 180)
+                    .fill(.blue)
+                    .frame(width: 30, height: 30)
+            }
+            .padding(.horizontal, 3)
+        )
+        
     }
 }
 
