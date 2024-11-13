@@ -77,6 +77,7 @@ final class Task {
                     .frame(width: 30, height: 30)
             }
             .padding(.horizontal, 3)
+            .padding(.trailing)
         )
         
     }
