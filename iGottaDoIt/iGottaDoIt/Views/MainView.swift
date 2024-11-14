@@ -16,6 +16,7 @@ enum Filters {
 struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var tasks: [Task]
+    @State private var path: [Task]  = []
     @State private var selectedFilter: Filters = .notDone
     
     var filteredTasks: [Task] {
@@ -34,31 +35,29 @@ struct MainView: View {
     }
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(filteredTasks) { task in
-                    NavigationLink(destination: TaskDetailView(task: task)) {
-                        HStack{
-                            task.taskIcon
-                            
-                            Text(task.title)
-                                .font(.title3)
-                        }
+        NavigationStack(path: $path) {
+            List(filteredTasks) { task in
+                NavigationLink(value: task, label: {
+                    HStack{
+                        task.taskIcon
+                        
+                        Text(task.title)
+                            .font(.title3)
                     }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button(action: {
-                            task.done.toggle()
-                        }) {
-                            Image(systemName: task.done ? "checkmark.circle.fill" : "checkmark.circle")
-                                .tint(.blue)
-                        }
+                })
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button(action: {
+                        task.done.toggle()
+                    }) {
+                        Image(systemName: task.done ? "checkmark.circle.fill" : "checkmark.circle")
+                            .tint(.blue)
                     }
-                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                        Button(role: .destructive, action: { deleteItem(task: task)
-                        }) {
-                            Image(systemName: "trash")
-                                .tint(.red)
-                        }
+                }
+                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                    Button(role: .destructive, action: { deleteItem(task: task)
+                    }) {
+                        Image(systemName: "trash")
+                            .tint(.red)
                     }
                 }
             }
@@ -78,8 +77,9 @@ struct MainView: View {
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
+            .navigationDestination(for: Task.self) { task in
+                TaskDetailView(task: task)
+            }
         }
     }
     
@@ -95,6 +95,8 @@ struct MainView: View {
         withAnimation {
             let newItem = Task(flag: Flag(), until: Date.now, note: "Do not use Grindr while having existential crisis")
             modelContext.insert(newItem)
+            
+            path.append(newItem)
         }
     }
 
