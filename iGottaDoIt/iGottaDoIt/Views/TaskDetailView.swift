@@ -10,6 +10,7 @@ import SwiftData
 
 struct TaskDetailView: View {
     @Bindable var task: Task
+    @State private var dateViewVisible: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, content: {
@@ -30,18 +31,25 @@ struct TaskDetailView: View {
                 .padding()
             }
             
-            Text("Task is being done since \(task.created, format: Date.FormatStyle(date: .complete, time: .shortened)) and is to be done until \(task.until, format: Date.FormatStyle(date: .complete, time: .shortened)).")
-                .padding()
+            Text("Task is being done since \(task.created, format: Date.FormatStyle(date: .complete, time: .shortened))")
+                .padding(.horizontal)
+            Text("and is to be done until \(task.until, format: Date.FormatStyle(date: .complete, time: .shortened))")
+                .padding(.horizontal)
+                .onTapGesture {
+                    dateViewVisible.toggle()
+                }
             
             if task.finishedDate != nil{
                 Text("Task has been completed on \(task.finishedDate!, format: Date.FormatStyle(date: .complete, time: .shortened))")
                     .padding(.horizontal)
             }
             
-            
             Spacer()
         })
         .padding()
+        .sheet(isPresented: $dateViewVisible, content: {
+            EmptyView()
+        })
         
         VStack(alignment: .center){
             Button(action: finishTask){
@@ -49,7 +57,6 @@ struct TaskDetailView: View {
             }
             .padding()
         }
-        
     }
     
     private func finishTask(){
