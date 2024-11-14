@@ -44,10 +44,23 @@ struct MainView: View {
                             Text(task.title)
                                 .font(.title3)
                         }
-                        
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(action: {
+                            task.done.toggle()
+                        }) {
+                            Image(systemName: task.done ? "checkmark.circle.fill" : "checkmark.circle")
+                                .tint(.blue)
+                        }
+                    }
+                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                        Button(role: .destructive, action: { deleteItem(task: task)
+                        }) {
+                            Image(systemName: "trash")
+                                .tint(.red)
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
@@ -85,11 +98,9 @@ struct MainView: View {
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteItem(task: Task) {
         withAnimation {
-            for index in offsets {
-                modelContext.delete(tasks[index])
-            }
+            modelContext.delete(task)
         }
     }
 }
