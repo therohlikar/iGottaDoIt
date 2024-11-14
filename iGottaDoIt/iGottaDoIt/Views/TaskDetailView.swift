@@ -33,7 +33,7 @@ struct TaskDetailView: View {
             
             Text("Task is being done since \(task.created, format: Date.FormatStyle(date: .complete, time: .shortened))")
                 .padding(.horizontal)
-            Text("and is to be done until \(task.until, format: Date.FormatStyle(date: .complete, time: .shortened))")
+            Text("and is to be done until \(Text(task.until, format: Date.FormatStyle(date: .complete, time: .shortened)).underline())")
                 .padding(.horizontal)
                 .onTapGesture {
                     dateViewVisible.toggle()
