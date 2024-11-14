@@ -48,7 +48,7 @@ struct TaskDetailView: View {
         })
         .padding()
         .sheet(isPresented: $dateViewVisible, content: {
-            EmptyView()
+            TaskDateView(task: task)
         })
         
         VStack(alignment: .center){
