@@ -29,7 +29,12 @@ struct MainView: View {
             }
         }
         
-        temp.sort { !$0.done && $1.done }
+        temp.sort { $0.until < $1.until }
+        
+        if selectedFilter == .all {
+            //the already sorted array by timestamp sort by done, so completed tasks are in the end 
+            temp.sort { !$0.done && $1.done }
+        }
         
         return temp
     }
