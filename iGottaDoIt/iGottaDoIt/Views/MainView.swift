@@ -8,20 +8,15 @@
 import SwiftUI
 import SwiftData
 
-enum Filters {
-    case notDone
-    case all
-}
-
 struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var tasks: [Task]
     @State private var path: [Task]  = []
-    @State private var selectedFilter: Filters = .notDone
+    @State private var filterFlag: FilterFlag = .notDone
     
     var filteredTasks: [Task] {
         var temp = tasks.filter { task in
-            switch selectedFilter {
+            switch filterFlag {
             case .all:
                 return true
             case .notDone:
@@ -31,8 +26,8 @@ struct MainView: View {
         
         temp.sort { $0.until < $1.until }
         
-        if selectedFilter == .all {
-            //the already sorted array by timestamp sort by done, so completed tasks are in the end 
+        if filterFlag == .all {
+            //the already sorted array by timestamp sort by done, so completed tasks are in the end and also sorted by the date
             temp.sort { !$0.done && $1.done }
         }
         
@@ -77,8 +72,8 @@ struct MainView: View {
                     }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button(action: filterTasks) {
-                        Image(systemName: selectedFilter == .all ? "eye" : "eye.slash")
+                    Button(action: viewUnfiltered) {
+                        Image(systemName: filterFlag == .all ? "eye" : "eye.slash")
                     }
                 }
             }
@@ -88,11 +83,11 @@ struct MainView: View {
         }
     }
     
-    private func filterTasks() {
-        if selectedFilter == .all {
-            selectedFilter = .notDone
+    private func viewUnfiltered() {
+        if filterFlag == .all {
+            filterFlag = .notDone
         }else {
-            selectedFilter = .all
+            filterFlag = .all
         }
     }
 
