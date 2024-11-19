@@ -12,21 +12,20 @@ struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var tasks: [Task]
     @State private var path: [Task]  = []
-    @State private var filterFlag: FilterFlag = .notDone
+    @State private var filterOptions: FilterOptions = FilterOptions()
     
     var filteredTasks: [Task] {
         var temp = tasks.filter { task in
-            switch filterFlag {
-            case .all:
-                return true
-            case .notDone:
+            if !filterOptions.getShowCompleted() {
                 return !task.done
+            }else {
+                return true
             }
         }
         
         temp.sort { $0.until < $1.until }
         
-        if filterFlag == .all {
+        if filterOptions.getShowCompleted() {
             //the already sorted array by timestamp sort by done, so completed tasks are in the end and also sorted by the date
             temp.sort { !$0.done && $1.done }
         }
@@ -72,8 +71,8 @@ struct MainView: View {
                     }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button(action: viewUnfiltered) {
-                        Image(systemName: filterFlag == .all ? "eye" : "eye.slash")
+                    Button(action: showCompletedToggle) {
+                        Image(systemName: filterOptions.getShowCompleted() ? "eye" : "eye.slash")
                     }
                 }
             }
@@ -83,14 +82,10 @@ struct MainView: View {
         }
     }
     
-    private func viewUnfiltered() {
-        if filterFlag == .all {
-            filterFlag = .notDone
-        }else {
-            filterFlag = .all
-        }
+    private func showCompletedToggle() {
+        filterOptions.toggleShowCompleted()
     }
-
+    
     private func addItem() {
         withAnimation {
             let newItem = Task(flag: Flag(), until: Date.now, note: "Do not use Grindr while having existential crisis")
